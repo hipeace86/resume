@@ -1,0 +1,27 @@
+{
+  "name": "resume",
+  "version": "1.0.0",
+  "description": "hipeace86 resume project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "hipeace86",
+  "license": "ISC",
+  "devDependencies": {
+    "markdown-resume": "^0.1.0"
+  },
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/hipeace86/resume.git"
+  },
+  "keywords": [
+    "markdown",
+    "resume"
+  ],
+  "bugs": {
+    "url": "https://github.com/hipeace86/resume/issues"
+  },
+  "homepage": "https://github.com/hipeace86/resume#readme"
+}
