@@ -1,0 +1,120 @@
+digraph hipeace86 {
+    /*生成命令:
+$ dot -Tpng hipeace86.dot -o hipeace86.png -Tcmapx -o hipeace86.map
+$ neato -Tpng hipeace86.dot -o hipeace86.png -Tcmapx -o hipeace86.map
+    全局设定
+    */
+    graph [label=""
+        ,fontsize=12.0,fontcolor=snow
+        ,labeljust="l",labelloc="b",center=1
+        ,ranksep=0.1,center=1,ratio=compress
+        ,rankdir=LR
+        ,bgcolor="#333333"
+        ];
+
+    node[fontsize=11.0,height=0.3
+        ,style="filled,setlinewidth(0.5)",fillcolor="#333333",color=gray,fontcolor=snow
+        ,shape=plaintext
+        ];
+
+    edge [fontsize=9.0,fontcolor=gray
+        ,color=azure
+        ,arrowsize=0.9,arrowhead=vee,arrowtail=none
+        ,style="setlinewidth(0.5)"
+        ];
+    title [label="知识体系 \n\nv.210910"
+        URL="https://blog.91python.com/resume/skill.html"];
+
+    mailme [label="电俺",shape=ellipse,style="filled,dashed,setlinewidth(5)"
+        ,color="#333333",fillcolor=dimgray
+        ,URL="mailto:hipeace86@gmail.com"];
+
+    Root [label="技能树"];
+    
+    Root->{skill dev monitor IAAS service container testing}
+    IAAS[
+        label="基础服务",shape=box3d;];
+        ecs [label="ECS",shape=folder];
+        lb [label="LoadBlance",shape=folder];
+        CDN [label="CDN",shape=folder];
+        IAAS->{ecs lb CDN}[style="setlinewidth(2)"]
+
+    service [
+        label="服务",shape=folder;];
+        kong [label="kong",shape=box3d,style="dashed",height=0.5]
+        mq [label="消息队列",shape=folder]
+            mq->{rabbitmq kafka}
+        log [label="日志",shape=folder]
+            log->{fluentd ELK}
+        discovery [label="服务发现",shape=folder]
+            discovery->{consul etcd zookeeper}
+        git [label="git",shape=folder]
+            ci[label="gitlab-ci"]
+            git -> gitlab -> ci ->　灰度发布
+        config [label="配置管理",shape=folder]
+            changelog [label="配置变更"]
+            ops_audit [label="运维审计"]
+            config -> {changelog ops_audit}
+
+        service->{kong mq log discovery git config}
+    
+    container [label="容器服务",shape=box3d]
+        
+        container->{docker registry ingress k8s rancher}
+
+    testing [label="测试",shape=box3d];
+        test_performance [label="性能测试",shape=folder]
+            test_performance ->{loadrunner jemeter qtp}[style="dotted"]
+        test_api [label="接口测试",shape=folder]
+            test_api ->{postman soapui}[style="dotted"]
+        network [label="抓包工具",shape=folder]
+            network ->{fiddler charles burpsuite}
+
+        testing->{test_performance test_api network}[style="dotted"]
+
+    
+    dev[label="开发能力",shape=box3d]
+        database [label="数据库",shape=folder]    
+            nosql [label="NoSql",shape=folder]
+                nosql->{Redis Mongodb}
+            
+            database ->{Mysql nosql TSDB Elasticsearch}
+    
+        front [label="前端",shape=box3d]
+            build [label="构建工具",shape=folder]
+                build->{Webpack Grunt Gulp}
+            FrameWork [label="框架",shape=folder]
+                FrameWork->{Vue React Angular}
+            image [label="图形/图像",shape=folder]
+                threejs[label="Three.js"]
+                image->{SVG Canvas WebGL threejs}[style="dotted"]
+            front->{build FrameWork image}
+        
+        server [label="服务端开发",shape=box3d]
+            server->{Python Golang PHP Nodejs Lua}
+        
+        dev->{server front database}
+
+    monitor[label="监控",shape=folder]
+        APM[label="应用监控",shape=folder]
+            APM->{Zipkin Skywalking}
+        monitor->{prometheus zabbix grafana altermanager APM}
+
+    skill[label="软技能",shape=box3d];
+        experience[label="经验",shape=folder];
+            field[label="领域/行业经验"];
+            project[label="项目经验"]
+            management[label="管理经验"]
+            experience->{management field project}
+        congnitive_ability[label="认知能力",shape=folder]
+            bussiness[label="业务理解"]
+            project_evaluation[label="项目评估"]
+            demand[label="需求分析"]
+            congnitive_ability->{bussiness demand project_evaluation}
+        
+        learn[label="学习能力",shape=folder]
+
+        skill->{experience learn congnitive_ability}
+
+    edge [style=invis];
+}
