@@ -7,7 +7,7 @@ $ neato -Tpng hipeace86.dot -o hipeace86.png -Tcmapx -o hipeace86.map
     graph [label=""
         ,fontsize=12.0,fontcolor=snow
         ,labeljust="l",labelloc="b",center=1
-        ,ranksep=0.1,center=1,ratio=compress
+        ,ranksep=0.2,center=1,ratio=compress
         ,rankdir=LR
         ,bgcolor="#333333"
         ];
@@ -25,13 +25,13 @@ $ neato -Tpng hipeace86.dot -o hipeace86.png -Tcmapx -o hipeace86.map
     title [label="知识体系 \n\nv.210910"
         URL="https://blog.91python.com/resume/skill.html"];
 
-    mailme [label="电俺",shape=ellipse,style="filled,dashed,setlinewidth(5)"
+    mailme [label="Email",shape=ellipse,style="filled,dashed,setlinewidth(5)"
         ,color="#333333",fillcolor=dimgray
         ,URL="mailto:hipeace86@gmail.com"];
 
     Root [label="技能树"];
-    
-    Root->{skill dev monitor IAAS service container testing}
+    Root->{skill dev monitor }[style="setlinewidth(3)",arrowhead="empty"]
+    Root->{IAAS service container testing}
     IAAS[
         label="基础服务",shape=box3d;];
         ecs [label="ECS",shape=folder];
@@ -40,8 +40,10 @@ $ neato -Tpng hipeace86.dot -o hipeace86.png -Tcmapx -o hipeace86.map
         IAAS->{ecs lb CDN}[style="setlinewidth(2)"]
 
     service [
-        label="服务",shape=folder;];
-        kong [label="kong",shape=box3d,style="dashed",height=0.5]
+        label="服务",shape=component;];
+        gateway[label="网关",shape=folder];
+            kong [label="kong",shape=box3d,style="dashed",height=0.5]
+            gateway->{kong APISIX}
         mq [label="消息队列",shape=folder]
             mq->{rabbitmq kafka}
         log [label="日志",shape=folder]
@@ -55,8 +57,10 @@ $ neato -Tpng hipeace86.dot -o hipeace86.png -Tcmapx -o hipeace86.map
             changelog [label="配置变更"]
             ops_audit [label="运维审计"]
             config -> {changelog ops_audit}
+        webserver [label="WebServer",shape=tab];
+            webserver->{nginx OpenResty}
 
-        service->{kong mq log discovery git config}
+        service->{gateway webserver mq log discovery git config}
     
     container [label="容器服务",shape=box3d]
         
